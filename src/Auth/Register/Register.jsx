@@ -34,8 +34,10 @@ const RegisterPage = () => {
     }
 
     try {
-      // Replace "YOUR_API_ENDPOINT" with your actual API endpoint for registration
-      const response = await axios.post("https://rentify-backend-rouge.vercel.app/register", formData);
+      const response = await axios.post(
+        "https://rentify-backend-xi.vercel.app/register",
+        formData
+      );
       console.log(response.data);
       setSuccessMessage("Registration successful! You can now login.");
       setFormData({
@@ -48,6 +50,7 @@ const RegisterPage = () => {
         confirmPassword: "",
       });
     } catch (error) {
+      console.log(error);
       setError("An error occurred. Please try again later.");
     }
   };

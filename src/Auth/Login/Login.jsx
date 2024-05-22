@@ -22,7 +22,7 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://example.com/api/login", formData);
+      const response = await axios.post("https://rentify-backend-xi.vercel.app/login", formData);
       console.log(response.data);
       // Handle successful login (e.g., store token, redirect to dashboard)
     } catch (error) {

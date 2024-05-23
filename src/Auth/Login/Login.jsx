@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginPage = () => {
@@ -9,6 +9,7 @@ const LoginPage = () => {
     password: "",
   });
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -22,9 +23,18 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await axios.post("https://rentify-backend-xi.vercel.app/login", formData);
+      const response = await axios.post(
+        "https://rentify-backend-xi.vercel.app/login",
+        formData
+      );
       console.log(response.data);
-      // Handle successful login (e.g., store token, redirect to dashboard)
+      if (response.data.user.id != null) {
+        if (response.data.user.userType === "buyer") {
+          navigate("/home");
+        } else if (response.data.user.userType === "seller"){
+          navigate("/properties");
+        }
+      }
     } catch (error) {
       setError("Invalid email or password. Please try again.");
     }
@@ -60,13 +70,27 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100" style={{ backgroundColor: "#799351", borderColor: "#799351" }}>Login</button>
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                style={{ backgroundColor: "#799351", borderColor: "#799351" }}
+              >
+                Login
+              </button>
             </form>
           </div>
         </div>
         <div className="row mt-3 text-center">
           <div className="col">
-            <p className="text-dark mb-0">Don't have an account? <Link to="/register" className="text-success text-decoration-none">Register</Link></p>
+            <p className="text-dark mb-0">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-success text-decoration-none"
+              >
+                Register
+              </Link>
+            </p>
           </div>
         </div>
       </div>
